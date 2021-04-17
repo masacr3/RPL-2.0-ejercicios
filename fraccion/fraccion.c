@@ -9,7 +9,7 @@ struct fraccion
     int denominador;
 };
 
-void simplificar_fraccion(fraccion_t *fraccion);
+void simplificar_fraccion(int* numerador, int* denominador);
 size_t largo_numero(int num);
 int valor_absoluto(int n);
 int obtener_maximo(int valor1, int valor2);
@@ -33,6 +33,8 @@ fraccion_t* fraccion_crear(int numerador, int denominador){
         denominador *= (-1);
         numerador *=(-1);
     }
+    
+    simplificar_fraccion(&numerador, &denominador);
 
     fraccion->denominador = denominador;
     fraccion->numerador = numerador;
@@ -80,8 +82,6 @@ void fraccion_destruir(fraccion_t* fraccion){
 
 char* fraccion_representacion(fraccion_t* fraccion){
 
-    simplificar_fraccion(fraccion);
-
     int es_negativo = fraccion->denominador * fraccion->numerador < 0 ? 1 : 0;
     int es_fraccion = fraccion->denominador > 1 ? 1 : 0;
 
@@ -102,15 +102,15 @@ char* fraccion_representacion(fraccion_t* fraccion){
     return representacion_fraccion;
 }
 
-void simplificar_fraccion(fraccion_t *fraccion){
+void simplificar_fraccion(int* numerador, int* denominador){
 
-    int valorMaximo = obtener_maximo(fraccion->numerador, fraccion->denominador);
+    int valorMaximo = obtener_maximo(*numerador, *denominador);
 
     for (int i=2; i < valorMaximo; i++){
         
-        while ( fraccion->numerador % i == 0 && fraccion->denominador % i == 0 ){
-            fraccion->numerador /= i;
-            fraccion->denominador /= i;
+        while ( *numerador % i == 0 && *denominador % i == 0 ){
+            *numerador /= i;
+            *denominador /= i;
         }
     }
 }
