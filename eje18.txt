@@ -1,0 +1,33 @@
+void swap(int* arr, size_t a, size_t b);
+
+void alter(int* arr, size_t i, size_t f);
+
+
+void alternar(int* arreglo, size_t n) {
+    return alter(arreglo,0,2*n-1);
+}
+
+void alter(int* arr, size_t i, size_t f){
+    size_t medio = (i+f)/2;
+
+    if (f-i == 3){
+        swap(arr, medio, medio+1);
+    } 
+
+    size_t k = 0;
+    size_t tope = medio / 2;
+
+    while ( k < tope+1){
+        swap(arr, medio-tope+k, medio+1+k);
+        k++;
+    }
+
+    alter(arr, i, medio);
+    alter(arr, medio+1, f);
+}
+
+void swap(int* arr, size_t a, size_t b){
+    int aux = arr[a];
+    arr[a] = arr[b];
+    arr[b] = aux;
+}
